@@ -2,11 +2,11 @@
 FROM mysql:latest
 
 # Set environment variables for MySQL
-ENV MYSQL_DATABASE CafeDB
-ENV MYSQL_USER wiola
-ENV MYSQL_PASSWORD cafedb
+ENV MYSQL_DATABASE=CafeDB
+ENV MYSQL_USER=wiola
+ENV MYSQL_PASSWORD=cafedb
 # Set the root password
-ENV MYSQL_ROOT_PASSWORD rootpassword
+ENV MYSQL_ROOT_PASSWORD=rootpassword
 
 EXPOSE 3306
 
