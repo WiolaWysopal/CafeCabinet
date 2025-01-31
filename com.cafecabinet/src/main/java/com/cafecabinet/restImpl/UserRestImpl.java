@@ -1,4 +1,5 @@
 package com.cafecabinet.restImpl;
+
 import java.util.Map;
 
 import com.cafecabinet.constents.CafeConstant;
@@ -8,6 +9,8 @@ import com.cafecabinet.utils.CafeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,13 +20,24 @@ public class UserRestImpl implements UserRest {
     UserService userService;
 
     @Override
-    public ResponseEntity<String> signUp(Map<String, String> requestMap) {
+    @PostMapping("/signup")  // Endpoint bez prefiksu /user
+    public ResponseEntity<String> signUp(@RequestBody Map<String, String> requestMap) {
         try {
             return userService.signUp(requestMap);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        //return new ResponseEntity<String>("{\"message\":\"Something went wrong\"}", HttpStatus.INTERNAL_SERVER_ERROR);
         return CafeUtils.getResponseEntity(CafeConstant.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    @PostMapping("/login")  // Endpoint dla logowania
+    public ResponseEntity<String> login(@RequestBody Map<String, String> requestMap) {
+        try {
+            return userService.login(requestMap);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>("{\"message\":\"Something went wrong\"}", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
